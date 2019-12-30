@@ -18,7 +18,6 @@ namespace Assets.Scripts
 
         public System.Collections.IEnumerator PaintTiles()
         {
-
             // Your world here
             // Example:
             SetTileType(2, 2, Tile.TileType.house);
@@ -28,7 +27,7 @@ namespace Assets.Scripts
             SetTileType(2, 3, Tile.TileType.water);
             SetTileType(1, 2, Tile.TileType.flowers);
 
-            yield return Wait(0);
+            yield return Wait(0); // don't delete me
         }
 
 
@@ -45,7 +44,7 @@ namespace Assets.Scripts
             SetTileType(xPos, zPos + 1, type);
         }
 
-        public void PaintCircle(int xPos, int zPos, Tile.TileType type)
+        public void PaintSquare(int xPos, int zPos, Tile.TileType type)
         {
             SetTileType(xPos, zPos, type);
             SetTileType(xPos + 1, zPos, type);
@@ -81,6 +80,15 @@ namespace Assets.Scripts
             {
                 yield return new WaitForSeconds(0);
             }
+        }
+
+        public bool IsEven(int i)
+        {
+            return (i % 2 == 0);
+        }
+        public bool IsOdd(int i)
+        {
+            return (i % 2 == 1);
         }
         #endregion
 
