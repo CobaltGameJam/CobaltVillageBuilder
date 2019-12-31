@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Assets.Scripts;
+using UnityEngine;
 
 
 public class GlobalMethods
@@ -31,8 +32,25 @@ public class CameraScript : MonoBehaviour
     // Start is called before the first frame update
     private Vector3 TargetPos;
 
-    public int MapHeight;
-    public int MapWidth;
+
+
+
+    public int MapHeight
+    {
+        get
+        {
+            return GetComponent<TileGenerator>().WorldHeight;
+        }
+    }
+
+    public int MapWidth
+    {
+        get
+        {
+            return GetComponent<TileGenerator>().WorldWidth;
+        }
+    }
+
     public int tileDimension;
     public float SmoothingSpeed;
 

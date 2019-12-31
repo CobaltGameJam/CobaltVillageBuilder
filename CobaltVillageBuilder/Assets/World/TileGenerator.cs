@@ -149,13 +149,13 @@ namespace Assets.Scripts
         public System.Collections.IEnumerator RandomDemo()
         {
             int forestChance = 65;
-            if (numGen.Next(0, 100) > forestChance)
+            if (numGen.Next(0, 100) < forestChance)
             {
                 int numSeeds = numGen.Next(1, 5);
                 for (int i = 0; i <= numSeeds; i++)
                 {
                     SeedPosRandom(Tile.TileType.trees, $"forest{i}");
-                    int forestDepth = numGen.Next(1, 6);
+                    int forestDepth = (numGen.Next(1, 6))*WorldMultiplier;
                     for (int j = 0; j <= forestDepth; j++)
                     {
                         GrowSeeds(Tile.TileType.trees, $"forest{i}");
@@ -165,9 +165,11 @@ namespace Assets.Scripts
                 }
             }
 
-            int riverChance = 15;
-            if (numGen.Next(0, 100) > riverChance)
+            int riverChance = 35;
+            bool hasRiver = false;
+            if (numGen.Next(0, 100) < riverChance)
             {
+                hasRiver = true;
                 int startX = numGen.Next(1, WorldWidth - 1);
                 int startZ = numGen.Next(1, WorldHeight - 1);
                 SeedTilePos(startX, startZ, Tile.TileType.water, "river");
@@ -193,23 +195,24 @@ namespace Assets.Scripts
                     horzGrowChance = 5;
                 }
 
-                for (int i = 0; i < WorldWidth/2; i++)
+                for (int i = 0; i < 3*WorldMultiplier; i++)
                 {
                     GrowSeeds(Tile.TileType.water, "river", 0, vertGrowChance, vertGrowChance, horzGrowChance, horzGrowChance);
                     yield return Wait(SHORT_DELAY);
                 }
             }
 
-            int pondChance = 45;
-            if (numGen.Next(0, 100) > pondChance)
+            int pondChance = 50;
+            if (hasRiver) { pondChance -= 20; }
+            if (numGen.Next(0, 100) < pondChance)
             {
-                int numPonds = numGen.Next(1, 4);
+                int numPonds = numGen.Next(1, 4 * WorldMultiplier);
                 for (int i = 0; i < numPonds; i++)
                 {
                     yield return Wait(SHORT_DELAY);
                     SeedPosRandom(Tile.TileType.water, "pond");
                 }
-                int pondSize = numGen.Next(2, 8);
+                int pondSize = Math.Min(((numGen.Next(2, 10))*WorldMultiplier)/numPonds, 2);
                 for (int i = 0; i < pondSize; i++)
                 {
                     yield return Wait(SHORT_DELAY);
@@ -224,7 +227,7 @@ namespace Assets.Scripts
                 SeedPosRandom(Tile.TileType.house, $"all houses");
             }
 
-            int houseSize = (numGen.Next(1, 10));
+            int houseSize = (numGen.Next(1, 5*WorldMultiplier));
             for (int j = 0; j < houseSize; j++)
             {
                 yield return Wait(SHORT_DELAY);
@@ -237,7 +240,7 @@ namespace Assets.Scripts
             {
                 SeedPosRandom(Tile.TileType.flowers, "flowers");
             }
-            int flowerSize = numGen.Next(3, 15);
+            int flowerSize = numGen.Next(3, 8*WorldMultiplier);
             for (int i = 0; i < flowerSize; i++)
             {
                 GrowAllFlowers();
@@ -261,6 +264,14 @@ namespace Assets.Scripts
         private DebugTileMode debugTileMode { get; set; }
         private Tile[][] WorldTiles;
         private System.Random numGen = new System.Random();
+        private int WorldMultiplier
+        {
+            get
+            {
+                return ((WorldWidth + WorldHeight) / 2) / 10;
+            }
+        }
+
         #endregion
 
 
@@ -627,8 +638,9 @@ namespace Assets.Scripts
         {
             List<Tile> tilesSeeded = new List<Tile>();
 
+
             // Above
-            if (originTile.TileAbove != null)
+            if (originTile.TileAbove != null && originTile.TileAbove.Type != originTile.Type)
             {
                 int roll = numGen.Next(0, 101);
                 if (percAbove > -1 && roll >= (100 - percAbove))
@@ -644,7 +656,7 @@ namespace Assets.Scripts
             }
 
             // Right
-            if (originTile.TileRight != null)
+            if (originTile.TileRight != null && originTile.TileRight.Type != originTile.Type)
             {
                 int roll = numGen.Next(0, 101);
                 if (percRight > -1 && roll >= (100 - percRight))
@@ -660,7 +672,7 @@ namespace Assets.Scripts
             }
 
             // Below
-            if (originTile.TileBelow != null)
+            if (originTile.TileBelow != null && originTile.TileBelow.Type != originTile.Type)
             {
                 int roll = numGen.Next(0, 101);
                 if (percBelow > -1 && roll >= (100 - percBelow))
@@ -676,7 +688,7 @@ namespace Assets.Scripts
             }
 
             // Left
-            if (originTile.TileLeft != null)
+            if (originTile.TileLeft != null && originTile.TileLeft.Type != originTile.Type)
             {
                 int roll = numGen.Next(0, 101);
                 if (percLeft > -1 && roll >= (100 - percLeft))

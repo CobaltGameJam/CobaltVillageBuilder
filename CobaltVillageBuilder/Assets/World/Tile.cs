@@ -33,6 +33,11 @@ public class Tile : MonoBehaviour
 
     public House house1;
     public House house2;
+    public House house3;
+    public House house4;
+    public House gazeebo;
+    public House well;
+    public House veggies;
     #endregion
 
     public enum TreeType
@@ -45,7 +50,8 @@ public class Tile : MonoBehaviour
     public enum HouseType
     {
         house1 = 0,
-        house2
+        gazeebo,
+        well
     }
 
     private static System.Random numGen = new System.Random();
@@ -169,7 +175,7 @@ public class Tile : MonoBehaviour
             return false;
     }
 
-    private int RetrieveShapeId()
+    public int RetrieveShapeId()
     {
 
         if (displayDebug == true && TileAbove != null && TileRight != null && TileBelow != null && TileLeft != null)
@@ -604,22 +610,47 @@ public class Tile : MonoBehaviour
         }
 
         House curHouse = null;
-        HouseType typeRoll;
-        typeRoll = (HouseType)numGen.Next((int)HouseType.house1, (int)HouseType.house2 + 1);
-        switch (typeRoll)
+        int diceRoll = numGen.Next(0, 100);
+        if (isBetween(diceRoll, 0, 50))
         {
-            case HouseType.house1:
+            diceRoll = numGen.Next(0, 100);
+            if (isBetween(diceRoll, 0, 30))
+            {
                 curHouse = GameObject.Instantiate(house1);
                 curHouse.transform.position = new Vector3(this.transform.position.x, 1.3f, this.transform.position.z);
-                break;
-
-            case HouseType.house2:
+            }
+            else if (isBetween(diceRoll, 31, 50))
+            {
                 curHouse = GameObject.Instantiate(house2);
-                curHouse.transform.position = new Vector3(this.transform.position.x, 1.0f, this.transform.position.z);
-                break;
+                curHouse.transform.position = new Vector3(this.transform.position.x, 1.5f, this.transform.position.z);
+            }
+            else if (isBetween(diceRoll, 51, 73))
+            {
+                curHouse = GameObject.Instantiate(house3);
+                curHouse.transform.position = new Vector3(this.transform.position.x, 1.5f, this.transform.position.z);
+            }
+            else
+            {
+                curHouse = GameObject.Instantiate(house4);
+                curHouse.transform.position = new Vector3(this.transform.position.x, 1.5f, this.transform.position.z);
+            }
+        }
 
-            default:
-                break;
+        else if (isBetween(diceRoll, 51, 70))
+        {
+            curHouse = GameObject.Instantiate(gazeebo);
+            curHouse.transform.position = new Vector3(this.transform.position.x, 1.0f, this.transform.position.z);
+        }
+
+        else if (isBetween(diceRoll, 71, 85))
+        {
+            curHouse = GameObject.Instantiate(well);
+            curHouse.transform.position = new Vector3(this.transform.position.x, 1.0f, this.transform.position.z);
+        }
+        else
+        {
+            curHouse = GameObject.Instantiate(veggies);
+            curHouse.transform.position = new Vector3(this.transform.position.x, 1.0f, this.transform.position.z);
         }
 
         if (curHouse != null)
@@ -630,6 +661,12 @@ public class Tile : MonoBehaviour
             MyHouses.Add(curHouse);
         }
     }
+
+    private bool isBetween(int value, int min, int max)
+    {
+        return (value >= min && value <= max);
+    }
+
 
     public void ClearHouses()
     {

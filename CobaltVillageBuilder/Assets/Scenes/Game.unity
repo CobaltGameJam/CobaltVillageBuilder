@@ -1131,8 +1131,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f73aadb2d9450194e883f4bf90491fb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WorldWidth: 16
-  WorldHeight: 16
+  WorldWidth: 10
+  WorldHeight: 10
   TileDimension: 1
   tile: {fileID: -213716469470282834, guid: 5001413a94aa0d64fa22d66ef47e4524, type: 3}
   displayDebug: 0
@@ -1205,8 +1205,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3d12a86044685614c98917658b817bd4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  MapHeight: 16
-  MapWidth: 16
   tileDimension: 1
   SmoothingSpeed: 0.18
   minZoom: 3.5

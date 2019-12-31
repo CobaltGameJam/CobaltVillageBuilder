@@ -203,6 +203,12 @@ MonoBehaviour:
   tree2: {fileID: 7769337043838528732, guid: 3217b1ce4679df94f8c9cd33e8990c0b, type: 3}
   tree3: {fileID: -5695001252949717255, guid: 3176aeb440566664ab0bd513a6a46280, type: 3}
   house1: {fileID: 2885899544422580860, guid: e480ecaef3e02434396f175dddf8abe7, type: 3}
-  house2: {fileID: 6332709677260446936, guid: a1fca1cd34ae01240bf0946fc7337be1, type: 3}
+  house2: {fileID: 3424982585538774589, guid: c6b9f431057ac714fa926966a1743210, type: 3}
+  house3: {fileID: -686112006211476833, guid: 7a03a0b84c8fc8e49a07d9906d68bc88, type: 3}
+  house4: {fileID: -6715768813965089041, guid: 06f5b0a4b3e383e44b2923a36079a3d9, type: 3}
+  gazeebo: {fileID: 6332709677260446936, guid: a1fca1cd34ae01240bf0946fc7337be1, type: 3}
+  well: {fileID: 8285606533561641532, guid: ff57c7a6d59f22c4e8359049ead78d2d, type: 3}
+  veggies: {fileID: 7507051713832405412, guid: f31fb0f07e7e9f64491c4d46fca58c44, type: 3}
+  IsShapeable: 0
   MyTrees: []
   MyHouses: []
