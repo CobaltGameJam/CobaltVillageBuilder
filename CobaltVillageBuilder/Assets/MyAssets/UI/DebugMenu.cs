@@ -24,6 +24,15 @@ public class DebugMenu : MonoBehaviour
     public bool showGui { get; set; }
     private List<GameObject> disabledGuiItems = new List<GameObject>();
 
+
+    // Frame rate properties:
+    public Text frameRateText;
+    private int frameCount = 0;
+    private float dt = 0.0f;
+    private float fps = 0.0f;
+    private float curFPS = 0.0f;
+    private float updateRate = 2.5f;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -46,6 +55,21 @@ public class DebugMenu : MonoBehaviour
         if (buildingText != null)
         {
             buildingText.text = GameObject.FindGameObjectsWithTag("Building").Length.ToString();
+        }
+
+        if (frameRateText != null)
+        {
+            frameCount++;
+            dt += Time.unscaledDeltaTime;
+
+            if (dt > 1.0f / updateRate)
+            {
+                fps = frameCount / dt;
+                frameCount = 0;
+                dt -= (1.0f / updateRate);
+            }
+            curFPS = GlobalMethods.Ease(curFPS, fps, 0.25f);
+            frameRateText.text = curFPS.ToString("0.0");
         }
     }
 
@@ -128,19 +152,19 @@ public class DebugMenu : MonoBehaviour
         currentMode = mode;
         if (currentMode == DebugTileMode.none)
         {
-            this.tileModeText.text = " TileMode: None";
+            this.tileModeText.text = " DebugMode: None";
         }
         else if (currentMode == DebugTileMode.tileType)
         {
-            this.tileModeText.text = " TileMode: Type";
+            this.tileModeText.text = " DebugMode: Type";
         }
         else if (currentMode == DebugTileMode.tileShape)
         {
-            this.tileModeText.text = " TileMode: Shape";
+            this.tileModeText.text = " DebugMode: Shape";
         }
         else if (currentMode == DebugTileMode.tilePosition)
         {
-            this.tileModeText.text = " TileMode: Position";
+            this.tileModeText.text = " DebugMode: Position";
         }
     }
 

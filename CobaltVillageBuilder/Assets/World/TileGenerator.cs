@@ -5,27 +5,33 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Assets.Scripts
 {
     public class TileGenerator : MonoBehaviour
     {
         #region CONSTANTS
-        public const int SHORT_DELAY = 10;
-        public const int MEDIUM_DELAY = 30;
-        public const int LONG_DELAY = 60;
+        public const int SHORT_DELAY = 5;
+        public const int MEDIUM_DELAY = 15;
+        public const int LONG_DELAY = 30;
         #endregion
 
         public System.Collections.IEnumerator PaintTiles()
         {
-            // Your world here
-            // Example:
-            SetTileType(2, 2, Tile.TileType.house);
-            SetTileType(1, 3, Tile.TileType.trees);
-            SetTileType(1, 2, Tile.TileType.trees);
-            SetTileType(1, 3, Tile.TileType.trees);
-            SetTileType(2, 3, Tile.TileType.water);
-            SetTileType(1, 2, Tile.TileType.flowers);
+            /****************************
+                    TILE TYPES
+                Tile.TileType.grass
+                Tile.TileType.flowers
+                Tile.TileType.water
+                Tile.TileType.trees
+                Tile.TileType.house
+             ***************************/
+
+            // YOUR WORLD SCRIPT HERE:
+            SetTileType(1, 1, Tile.TileType.house);
+            PaintCross(4, 4, Tile.TileType.trees);
+
 
             yield return Wait(0); // don't delete me
         }
@@ -102,7 +108,8 @@ namespace Assets.Scripts
             SeedTilePos(WorldWidth - 1, WorldHeight - 1, Tile.TileType.trees, "TR");
             SeedTilePos(0, WorldHeight - 1, Tile.TileType.trees, "TL");
             SeedTilePos(WorldWidth - 1, 0, Tile.TileType.trees, "BR");
-            for (int i = 0; i < 10; i++)
+            int numPasses = (int)(WorldWidth / 2);
+            for (int i = 0; i < numPasses; i++)
             {
                 GrowSeeds(Tile.TileType.trees, "TL", 0, 20, 80, 20, 20);
                 GrowSeeds(Tile.TileType.trees, "TR", 0, 20, 80, 20, 20);
@@ -112,13 +119,14 @@ namespace Assets.Scripts
             }
 
             // River down middle
-            SeedTilePos(10, 5, Tile.TileType.water, "river1");
-            SeedTilePos(10, 10, Tile.TileType.water, "river1");
-            SeedTilePos(10, 15, Tile.TileType.water, "river1");
-            for (int i = 0; i < 11; i++)
+            SeedTilePos(WorldWidth/2, WorldHeight/4, Tile.TileType.water, "river1");
+            SeedTilePos(WorldWidth/2, WorldHeight/2, Tile.TileType.water, "river1");
+            SeedTilePos(WorldWidth/2, (int)(WorldHeight*0.75), Tile.TileType.water, "river1");
+            numPasses = (int)(WorldHeight * 0.75);
+            for (int i = 0; i < numPasses; i++)
             {
                 GrowSeeds(Tile.TileType.water, "river1", 0, 85, 85, 5, 5);
-                yield return Wait(MEDIUM_DELAY);
+                yield return Wait(SHORT_DELAY);
             }
 
             // Housing settlements
@@ -254,7 +262,9 @@ namespace Assets.Scripts
 
         #region Unity Configurable Properties
         public int WorldWidth;
+        public Text WorldWidthText;
         public int WorldHeight;
+        public Text WorldHeightText;
         public int TileDimension;
         public Tile tile;
         public bool displayDebug;
@@ -289,12 +299,61 @@ namespace Assets.Scripts
             return curTile;
         }
 
+
+        public void ReduceMapWidth()
+        {
+            if (WorldWidth > 2)
+            {
+                GridDelete();
+                WorldWidth -= 1;
+                InstantiateGrid();
+            }
+        }
+
+        public void IncreaseMapWidth()
+        {
+            GridDelete();
+            WorldWidth += 1;
+            InstantiateGrid();
+        }
+
+        public void ReduceMapHeight()
+        {
+            if (WorldHeight > 2)
+            {
+                GridDelete();
+                WorldHeight -= 1;
+                InstantiateGrid();
+            }
+        }
+
+        public void IncreaseMapHeight()
+        {
+            GridDelete();
+            WorldHeight += 1;
+            InstantiateGrid();
+        }
+
         public void GridInit()
         {
             WorldTiles = new Tile[WorldHeight][];
             for (int i = 0; i < WorldHeight; i++)
             {
                 WorldTiles[i] = new Tile[WorldWidth];
+            }
+        }
+
+        public void GridDelete()
+        {
+            for (int row = 0; row < WorldHeight; row++)
+            {
+                for (int col = 0; col < WorldWidth; col++)
+                {
+                    Tile curTile = WorldTiles[row][col];
+                    curTile.ClearHouses();
+                    curTile.ClearTrees();
+                    Destroy(curTile.gameObject);
+                }
             }
         }
 
@@ -316,6 +375,7 @@ namespace Assets.Scripts
 
             // Need to do AFTER generating all the tiles
             SetNeighbors();
+            SetTileDebugText(debugTileMode);
         }
 
         private void SetNeighbors()
@@ -474,7 +534,22 @@ namespace Assets.Scripts
             {
                 ResetWorld();
             }
+
+            UpdateMapDimensionLabels();
         }
+
+        private void UpdateMapDimensionLabels()
+        {
+            if (WorldWidthText != null)
+            {
+                WorldWidthText.text = WorldWidth.ToString();
+            }
+            if (WorldHeightText != null)
+            {
+                WorldHeightText.text = WorldHeight.ToString();
+            }
+        }
+
         #endregion
 
 

@@ -336,7 +336,7 @@ public class Tile : MonoBehaviour
                         float radiusX = 0.5f;
                         float radiusZ = 0.1f;
                         //GenerateTreesAtPos(1, 0, 0, 0, 0); // test
-                        GenerateTreesAtPos(8, -radiusX, radiusX, -radiusZ, radiusZ);
+                        GenerateTreesAtPos(4, -radiusX, radiusX, -radiusZ, radiusZ);
                     }
                     break;
 
@@ -354,7 +354,7 @@ public class Tile : MonoBehaviour
                         float radiusX = 0.1f;
                         float radiusZ = 0.5f;
                         //GenerateTreesAtPos(1, 0, 0, 0, 0); // test
-                        GenerateTreesAtPos(8, -radiusX, radiusX, -radiusZ, radiusZ);
+                        GenerateTreesAtPos(4, -radiusX, radiusX, -radiusZ, radiusZ);
                     }
                     break;
 
@@ -367,7 +367,7 @@ public class Tile : MonoBehaviour
                     }
                     else if (Type == TileType.trees)
                     {
-                        GenerateCorner(CornerType.upLeft, 5);
+                        GenerateCorner(CornerType.upLeft, 4);
                     }
                     break;
 
@@ -380,7 +380,7 @@ public class Tile : MonoBehaviour
                     }
                     else if (Type == TileType.trees)
                     {
-                        GenerateCorner(CornerType.upRight, 5);
+                        GenerateCorner(CornerType.upRight, 4);
                     }
                     break;
 
@@ -393,7 +393,7 @@ public class Tile : MonoBehaviour
                     }
                     else if (Type == TileType.trees)
                     {
-                        GenerateCorner(CornerType.downRight, 5);
+                        GenerateCorner(CornerType.downRight, 4);
                     }
                     break;
 
@@ -406,7 +406,7 @@ public class Tile : MonoBehaviour
                     }
                     else if (Type == TileType.trees)
                     {
-                        GenerateCorner(CornerType.downLeft, 5);
+                        GenerateCorner(CornerType.downLeft, 4);
                     }
                     break;
 
@@ -419,8 +419,8 @@ public class Tile : MonoBehaviour
                     }
                     else if (Type == TileType.trees)
                     {
-                        GenerateTreesAtPos(6, -0.5f, 0.5f, 0.2f, 0.2f); // horizontal
-                        GenerateTreesAtPos(6, -0.5f, 0.0f, -0.5f, 0.5f); // vertical
+                        GenerateTreesAtPos(5, -0.5f, 0.5f, 0.2f, 0.2f); // horizontal
+                        GenerateTreesAtPos(5, -0.5f, 0.0f, -0.5f, 0.5f); // vertical
                     }
                     break;
 
@@ -433,8 +433,8 @@ public class Tile : MonoBehaviour
                     }
                     else if (Type == TileType.trees)
                     {
-                        GenerateTreesAtPos(6, -0.5f, 0.5f, 0.0f, 0.5f); // horizontal
-                        GenerateTreesAtPos(6, -0.2f, 0.2f, -0.5f, 0.5f); // vertical
+                        GenerateTreesAtPos(5, -0.5f, 0.5f, 0.0f, 0.5f); // horizontal
+                        GenerateTreesAtPos(5, -0.2f, 0.2f, -0.5f, 0.5f); // vertical
                     }
                     break;
 
@@ -447,8 +447,8 @@ public class Tile : MonoBehaviour
                     }
                     else if (Type == TileType.trees)
                     {
-                        GenerateTreesAtPos(6, -0.5f, 0.5f, 0.2f, 0.2f); // horizontal
-                        GenerateTreesAtPos(6, 0.0f, 0.5f, -0.5f, 0.5f); // vertical
+                        GenerateTreesAtPos(5, -0.5f, 0.5f, 0.2f, 0.2f); // horizontal
+                        GenerateTreesAtPos(5, 0.0f, 0.5f, -0.5f, 0.5f); // vertical
                     }
                     break;
 
@@ -461,8 +461,8 @@ public class Tile : MonoBehaviour
                     }
                     else if (Type == TileType.trees)
                     {
-                        GenerateTreesAtPos(6, -0.5f, 0.5f, -0.5f, 0.0f); // horizontal
-                        GenerateTreesAtPos(6, -0.2f, 0.2f, -0.5f, 0.5f); // vertical
+                        GenerateTreesAtPos(5, -0.5f, 0.5f, -0.5f, 0.0f); // horizontal
+                        GenerateTreesAtPos(5, -0.2f, 0.2f, -0.5f, 0.5f); // vertical
                     }
                     break;
 
@@ -475,7 +475,7 @@ public class Tile : MonoBehaviour
                     }
                     else if (Type == TileType.trees)
                     {
-                        GenerateTreesAtPos(12, -0.5f, 0.5f, -0.5f, 0.5f);
+                        GenerateTreesAtPos(8, -0.5f, 0.5f, -0.5f, 0.5f);
                     }
                     break;
             }
