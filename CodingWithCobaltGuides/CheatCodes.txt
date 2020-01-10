@@ -1,0 +1,127 @@
+
+Here are some example solutions for the Village Builder Challenges:
+
+
+// Castle Moat Example Answer:
+int wallLength = 6;
+for (int i = 0; i <= wallLength; i++)
+{
+	// Horizontal Walls:
+	SetTileType(i, 0, Tile.TileType.water);
+	SetTileType(i, wallLength, Tile.TileType.water);
+
+	// Vertical Walls
+	SetTileType(wallLength, i, Tile.TileType.water);
+	SetTileType(0, i, Tile.TileType.water);
+}
+int mid = wallLength / 2;
+PaintCross(mid, mid, Tile.TileType.flowers);
+SetTileType(mid, mid, Tile.TileType.house);
+
+
+// Steps Example Answer:
+int numSteps = 8;
+for (int i = 0; i <= numSteps; i++)
+{
+	for (int j = 0; j < i; j++)
+	{
+		SetTileType(i, j, Tile.TileType.house);
+	}
+}
+
+
+// Checkered Pattern Answer:
+for (int i = 0; i < WorldHeight; i++)
+{
+	for (int j = 0; j < WorldWidth; j++)
+	{
+		if (IsEven(i))
+		{
+			if (IsEven(j))
+			{
+				SetTileType(j, i, Tile.TileType.water);
+			}
+			else
+			{
+				SetTileType(j, i, Tile.TileType.trees);
+			}
+		}
+		else
+		{
+			if (IsEven(j))
+			{
+				SetTileType(j, i, Tile.TileType.trees);
+			}
+			else
+			{
+				SetTileType(j, i, Tile.TileType.water);
+			}
+		}
+	}
+}
+
+
+// Spiral Challenge:
+int rotation = 0; // 0 is up, 1 right, 2 down, 3 left, repeat
+int amount = 1;
+
+int currentX = WorldWidth / 2;
+int currentZ = WorldHeight / 2;
+int nextX = currentX;
+int nextZ = currentZ;
+while (
+	currentX < WorldWidth &&
+	currentX >= 0 &&
+	currentZ < WorldHeight &&
+	currentZ >= 0)
+{
+	SetTileType(currentX, currentZ, Tile.TileType.trees);
+	if (rotation == 0) // up
+	{
+		nextZ = currentZ + amount;
+		while (currentZ != nextZ)
+		{
+			currentZ++;
+			SetTileType(currentX, currentZ, Tile.TileType.trees);
+		}
+	}
+	else if (rotation == 1) // right
+	{
+		nextX = currentX + amount;
+		while (currentX != nextX)
+		{
+			currentX++;
+			SetTileType(currentX, currentZ, Tile.TileType.trees);
+		}
+	}
+	else if (rotation == 2) // down
+	{
+		nextZ = currentZ - amount;
+		while (currentZ != nextZ)
+		{
+			currentZ--;
+			SetTileType(currentX, currentZ, Tile.TileType.trees);
+		}
+	}
+	else if (rotation == 3) // left
+	{
+		nextX = currentX - amount;
+		while (currentX != nextX)
+		{
+			currentX--;
+			SetTileType(currentX, currentZ, Tile.TileType.trees);
+		}
+	}
+
+	SetTileType(currentX, currentZ, Tile.TileType.trees);
+
+	rotation++;
+	amount += 1;
+	if (rotation > 3)
+	{
+		rotation = 0;
+	}
+}
+
+
+

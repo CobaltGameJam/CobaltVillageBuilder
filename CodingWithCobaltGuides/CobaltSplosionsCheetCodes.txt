@@ -1,0 +1,20 @@
+CobaltSplosions Cheat Sheet:
+
+
+
+DUEL GUNS:
+Player Script, Update Method:
+
+if (Time.time > nextFire)
+{
+	nextFire = Time.time + fireRate; 								//Increment nextFire time with the current system time + fireRate
+
+	Instantiate(shot, new Vector3(shotSpawn.position.x - 0.4f, shotSpawn.position.y), shotSpawn.rotation);
+	Instantiate(shot, new Vector3(shotSpawn.position.x + 0.4f, shotSpawn.position.y), shotSpawn.rotation);
+	
+	GetComponent<AudioSource>().Play (); 													//Play Fire sound
+}
+
+
+
+
